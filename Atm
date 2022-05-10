@@ -1,0 +1,367 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <Windows.h>
+#include <unistd.h>
+int bakiye=25000;
+int euroBakiye=0;
+int dolarBakiye=0;
+int sifre = 1234;//Giris için lazim olan sifre
+int islem,doviz;
+int fatura_odeme;
+int secim,secim2;
+
+//Fonksiyonlary üstte tanymlayalym daha temiz gözüken kod olur
+void giris(); //Giri? yapmak için kullanylan fonksiyon tanymladym
+int anamenu(); //Bu da anamenu fonksiyon
+int para(); //Para fonksiyonlarının hepsi burada
+void clrscr() //Ekrany sildirme kodu.
+{
+    system("@cls||clear");
+}
+
+int main()
+{
+    system("Color 0A"); //Yazynyn rengini ye?il yapan kod satyry
+    giris();
+}
+
+void giris(){
+	
+    int girisSifre;
+    printf("Lutfen hesap sifrenizi giriniz: ");
+    scanf("%d",&girisSifre);
+
+    if(girisSifre==sifre)
+    {
+        printf("Giris basarili. Ana menuye yonlendiriliyorsunuz...");
+  
+        sleep(3); // Bekleme yapmaya yarayan fonksiyon. Yçindeki 3 sayysy 3 saniye bekle demek
+        clrscr();
+        anamenu();
+    }
+    else
+    {
+        printf("Girmis oldugunuz sifre hatali. Tekrar deneyiniz\n\n");
+        sleep(2);
+        giris();
+
+
+    }
+
+	
+}
+int para(int para_cekme,int para_yatirma,int para_gonderme,int fatura){
+
+	
+	if(secim == 2)
+	{
+		bakiye=bakiye-para_cekme;
+	}
+	else if(secim == 3)
+	{
+		bakiye=bakiye+para_yatirma;
+	}
+	else if(secim == 4)
+	{
+		bakiye=bakiye-para_gonderme;
+	}
+	else if(secim==5)
+	{
+			printf("1-Dolar Al\n2-Dolar Sat\n3-Euro Al\n4-Euro Sat\n\nYapmak istediginiz islemi giriniz: ");
+			scanf("%d", &islem);
+			if(islem==1)
+			{	
+				clrscr();
+				printf("Kac dolar satin almak istiyorsunuz?:");
+				
+					scanf("%d",&doviz);
+					if(bakiye>(doviz*15))
+					{
+						bakiye -= doviz*15;
+						dolarBakiye+=doviz;
+						printf("Doviz isleminiz gerceklestirilmistir.\n");
+						printf("Guncel dolar bakiyeniz: %d $\n\n",dolarBakiye);
+						printf("1-Ana menuye geri don\n");
+        				printf("2-Cikis yap\n");
+        
+        				printf("\nLutfen yapmak istediginiz islemi seciniz: ");
+        				scanf("%d",&secim2);
+        
+        				if(secim2==1)
+        				anamenu();
+        				else if(secim2==2){
+        				clrscr();
+        				printf("Herhangi bir tusa basip cikis yapiniz");
+						}
+                    	
+					}
+					
+					else if(bakiye<(doviz*15))
+					{
+						printf("Bu miktar icin yeterli bakiyeniz bulunmamaktadir.");
+						sleep(3);
+						anamenu();  
+					}
+					
+				
+			}
+			
+			else if(islem==2){
+				clrscr();
+				printf("Kac dolar satmak istiyorsunuz?:");
+				
+				scanf("%d",&doviz);
+				
+				if(doviz<=dolarBakiye){
+					
+					dolarBakiye=dolarBakiye-doviz;
+					bakiye=bakiye+(doviz*15);
+					printf("Doviz isleminiz gerceklesmistir\n");
+					printf("Guncel dolar bakiyeniz: %d $",dolarBakiye);
+					
+				}
+				else
+				{
+				printf("Bu miktar icin yeterli dolar bakiyeniz bulunmamaktadir.");
+				sleep(3);
+				anamenu(); 	
+					
+				}
+				
+				
+				
+			}
+			
+			else if(islem==3)
+			{
+				clrscr();
+				printf("Kac euro satin almak istiyorsunuz?:");
+				
+				
+					scanf("%d",&doviz);
+					if(bakiye>(doviz*18))
+					{
+						bakiye -= doviz*18;
+						euroBakiye+=doviz;
+						printf("Doviz isleminiz gerceklestirilmistir.\n");
+						printf("Guncel euro bakiyeniz: %d €\n\n",euroBakiye);
+						
+						printf("1-Ana menuye geri don\n");
+        				printf("2-Cikis yap\n");
+        
+        				printf("\nLutfen yapmak istediginiz islemi seciniz: ");
+        				scanf("%d",&secim2);
+        
+        				if(secim2==1)
+        				anamenu();
+        				else if(secim2==2){
+        				clrscr();
+        				printf("Herhangi bir tusa basip cikis yapiniz");
+						}
+                    	
+					}
+					else if(bakiye<(doviz*18))
+					{
+						printf("Bu miktar icin yeterli bakiyeniz bulunmamaktadir.");
+						sleep(3);
+						anamenu();  
+					}
+					
+				
+			}
+			else if(islem==4){
+				clrscr();
+				printf("Kac euro satmak istiyorsunuz?:");
+				
+				scanf("%d",&doviz);
+				
+				if(doviz<=euroBakiye){
+					
+					euroBakiye=euroBakiye-doviz;
+					bakiye=bakiye+(doviz*18);
+					printf("Doviz isleminiz gerceklestirilmistir.\n");
+					printf("Guncel euro bakiyeniz: %d €\n\n",euroBakiye);
+					printf("1-Ana menuye geri don\n");
+        			printf("2-Cikis yap\n");
+        
+        			printf("\nLutfen yapmak istediginiz islemi seciniz: ");
+        			scanf("%d",&secim2);
+        
+        			if(secim2==1)
+        			anamenu();
+        			else if(secim2==2){
+        			clrscr();
+        			printf("Herhangi bir tusa basip cikis yapiniz");
+					}
+					
+				}
+				else
+				{
+				printf("Bu miktar icin yeterli dolar bakiyeniz bulunmamaktadir.");
+				sleep(3);
+				anamenu(); 	
+					
+				}
+				
+				
+				
+			}
+		
+		
+	}
+	else if(secim==6)
+	{
+		fatura=rand();
+		printf("%d",fatura);
+		bakiye=bakiye-fatura_odeme;
+	}
+	
+
+}
+int anamenu(){
+   
+    
+	clrscr();
+    printf("--------BANKA YONETIM SISTEMI--------\n\n");
+    printf("1-Hesap Bakiyesi Goruntule\n");
+    printf("2-Para Cek\n");
+    printf("3-Para Yatir\n");
+    printf("4-Para Gonder\n");
+    printf("5-Doviz Al/Sat\n");
+    printf("6-Fatura Ode\n");
+    printf("7-Cikis Yap");
+    printf("\n\nLutfen yapmak istediginiz islemin numarasini giriniz: ");
+    scanf("%d",&secim);
+    switch(secim){
+    case 1:
+		clrscr();
+        printf("Bakiyeniz: %d TL\n",bakiye);
+        printf("Dolar Bakiyeniz: %d $\n",dolarBakiye);
+        printf("Euro Bakiyeniz: %d €\n\n",euroBakiye);
+        
+        printf("1-Ana menuye geri don\n");
+        printf("2-Cikis yap\n");
+        
+        printf("\nLutfen yapmak istediginiz islemi seciniz: ");
+        scanf("%d",&secim2);
+        
+        if(secim2==1)
+        anamenu();
+        else if(secim2==2){
+        clrscr();
+        printf("Herhangi bir tusa basip cikis yapiniz");
+		}
+        
+        
+        break;
+    case 2: ;
+    	clrscr();
+        int cekilen_miktar;
+        printf("Cekmek istediginiz miktari girin: "); 
+		scanf("%d",&cekilen_miktar);
+		printf("Isleminiz yapiliyor Lutfen bekleyiniz...\n\n");
+        sleep(2);
+		if(cekilen_miktar<bakiye)
+		{
+		
+        printf("Cekebileceginiz miktar=%d\n",cekilen_miktar);
+        para(cekilen_miktar,NULL,NULL,NULL);
+        printf("Yeni bakiyeniz:%d\n\n", bakiye);
+       	}
+       	else {
+       	printf("Maksimum cekebileginiz miktar %d TL'dir. Baska bir miktar giriniz",bakiye);
+       	sleep(3);
+		anamenu();   	
+		}
+       	printf("1-Ana menuye geri don\n");
+        printf("2-Cikis yap\n");
+        
+        printf("\nLutfen yapmak istediginiz islemi seciniz: ");
+        scanf("%d",&secim2);
+        
+        if(secim2==1)
+        anamenu();
+        else if(secim2==2){
+        clrscr();
+        printf("Herhangi bir tusa basip cikis yapiniz");
+		}
+       
+        
+        break;
+    case 3: ;
+    	clrscr();
+        int yatirilan_miktar;
+        printf("Yatirmak istediginiz miktari girin:"); 
+		scanf("%d",&yatirilan_miktar);
+        printf("Yatirdiginiz miktar=%d\n",yatirilan_miktar);
+        printf("Isleminiz yapiliyor Lutfen bekleyiniz...\n\n");
+        sleep(2);
+        para(NULL,yatirilan_miktar,NULL,NULL);
+        printf("Yeni bakiyeniz:%d\n\n", bakiye);
+        
+        printf("1-Ana menuye geri don\n");
+        printf("2-Cikis yap\n");
+        
+        printf("\nLutfen yapmak istediginiz islemi seciniz: ");
+        scanf("%d",&secim2);
+        
+        if(secim2==1)
+        anamenu();
+        else if(secim2==2){
+        clrscr();
+        printf("Herhangi bir tusa basip cikis yapiniz");
+		}
+         
+        break;
+    case 4: ;
+    	clrscr();
+        int gonderilen_miktar;
+        printf("Gondermek istediginiz miktari girin:"); 
+		scanf("%d",&gonderilen_miktar);
+		if(gonderilen_miktar<bakiye){
+		
+        printf("Gonderdiginiz para:%d\n",gonderilen_miktar);
+        para(NULL,NULL,gonderilen_miktar,NULL);
+        printf("Yeni bakiyeniz:%d\n\n",bakiye);
+    	}
+    	else {
+       	printf("Maksimum gonderebileceginiz miktar %d TL'dir. Baska bir miktar giriniz",bakiye);
+       	sleep(3);
+		anamenu();   	
+		}
+        printf("1-Ana menuye geri don\n");
+        printf("2-Cikis yap\n");
+        
+        printf("\nLutfen yapmak istediginiz islemi seciniz: ");
+        scanf("%d",&secim2);
+        
+        if(secim2==1)
+        anamenu();
+        else if(secim2==2){
+        clrscr();
+        printf("Herhangi bir tusa basip cikis yapiniz");
+		}
+        break;
+    case 5:
+        clrscr();
+        para(NULL,NULL,NULL,NULL);
+        break;
+    case 6:
+    	clrscr();
+    	int borc = rand() % 300 + 50;
+		printf("Borcunuz:%d\n TL",borc);
+		printf("Lutfen faturanizi odeyiniz:"); 
+		scanf("%d",&fatura_odeme);
+		para(NULL,NULL,NULL,fatura_odeme);
+        break;
+    case 7:
+        clrscr();
+        printf("Herhangi bir tusa basip cikis yapiniz");
+        break;
+    default :
+        printf("Gecersiz bir numara girdiniz!");
+        anamenu();
+    }
+
+
+}
